@@ -1,0 +1,10 @@
+{
+    "name": "jazzy6113/pnss",
+    "description": "my bad practicle",
+    "type": "project",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.4 | ^8.0"
+    }
+}
