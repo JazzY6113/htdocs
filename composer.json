@@ -1,14 +1,9 @@
 {
     "name": "jazzy6113/pnss",
-    "description": "my bad practicle",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
     "require": {
-        "php": "^7.4 | ^8.0",
-        "illuminate/database": "^10.0@dev",
-        "illuminate/events": "^10.@dev",
-        "nikic/fast-route": "^2.0@dev"
     },
     "autoload": {
         "psr-4": {
