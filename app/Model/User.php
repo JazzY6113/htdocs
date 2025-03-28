@@ -10,37 +10,50 @@ class User extends Model implements IdentityInterface
 {
     use HasFactory;
 
-    public $timestamps = false;
+    public $timestamps = true;
+    protected $primaryKey = 'user_id';
     protected $fillable = [
         'name',
+        'surname',
+        'patronymic',
         'login',
-        'password'
+        'password',
+        'role',
+        'is_active'
     ];
 
     protected static function booted()
     {
-        static::created(function ($user) {
+        static::creating(function ($user) {
             $user->password = md5($user->password);
-            $user->save();
         });
     }
 
-    //Выборка пользователя по первичному ключу
-    public function findIdentity(int $id)
-    {
-        return self::where('id', $id)->first();
-    }
-
-    //Возврат первичного ключа
     public function getId(): int
     {
-        return $this->id;
+        return $this->user_id;
     }
 
-    //Возврат аутентифицированного пользователя
+    public function findIdentity(int $id)
+    {
+        return self::where('user_id', $id)->first();
+    }
+
     public function attemptIdentity(array $credentials)
     {
-        return self::where(['login' => $credentials['login'],
-            'password' => md5($credentials['password'])])->first();
+        return self::where([
+            'login' => $credentials['login'],
+            'password' => md5($credentials['password'])
+        ])->first();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function getFullName(): string
+    {
+        return trim("{$this->surname} {$this->name} {$this->patronymic}");
     }
 }
