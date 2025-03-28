@@ -18,6 +18,10 @@
         <?php else: ?>
             <?php if (app()->auth::user()->role === 'admin'): ?>
                 <a href="<?= app()->route->getUrl('/users') ?>">Управление пользователями</a>
+            <?php elseif (app()->auth::user()->role === 'librarian'): ?>
+                <a href="<?= app()->route->getUrl('/library') ?>">Библиотека</a>
+                <a href="<?= app()->route->getUrl('/add-reader') ?>">Добавить читателя</a>
+                <a href="<?= app()->route->getUrl('/add-book') ?>">Добавить книгу</a>
             <?php endif; ?>
             <a href="<?= app()->route->getUrl('/logout') ?>">Выход (<?= app()->auth::user()->name ?>)</a>
         <?php endif; ?>
