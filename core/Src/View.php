@@ -2,8 +2,6 @@
 
 namespace Src;
 
-use Exception;
-
 class View
 {
     private string $view = '';
@@ -18,7 +16,6 @@ class View
         $this->data = $data;
     }
 
-    //Полный путь до директории с представлениями
     private function getRoot(): string
     {
         global $app;
@@ -28,43 +25,44 @@ class View
         return $_SERVER['DOCUMENT_ROOT'] . $root . $path;
     }
 
-    //Путь до основного файла с шаблоном сайта
     private function getPathToMain(): string
     {
         return $this->root . $this->layout;
     }
 
-    //Путь до текущего шаблона
     private function getPathToView(string $view = ''): string
     {
         $view = str_replace('.', '/', $view);
-        return $this->getRoot() . "/$view.php";
+        return $this->root . "/$view.php";
     }
 
     public function render(string $view = '', array $data = []): string
     {
         $path = $this->getPathToView($view);
 
-        if (file_exists($this->getPathToMain()) && file_exists($path)) {
-
-            //Импортирует переменные из массива в текущую таблицу символов
-            extract($data, EXTR_PREFIX_SAME, '');
-
-            //Включение буферизации вывода
-            ob_start();
-            require $path;
-            //Помещаем буфер в переменную и очищаем его
-            $content = ob_get_clean();
-
-            //Возвращаем собранную страницу
-            return require($this->getPathToMain());
+        if (!file_exists($path)) {
+            throw new \RuntimeException("View file not found: $path");
         }
-        throw new Exception('Error render');
+
+        if (!file_exists($this->getPathToMain())) {
+            throw new \RuntimeException("Layout file not found: " . $this->getPathToMain());
+        }
+
+        extract($data, EXTR_PREFIX_SAME, '');
+        ob_start();
+        require $path;
+        $content = ob_get_clean();
+
+        return require $this->getPathToMain();
     }
 
     public function __toString(): string
     {
-        return $this->render($this->view, $this->data);
+        try {
+            return $this->render($this->view, $this->data);
+        } catch (\Throwable $e) {
+            error_log("View rendering error: " . $e->getMessage());
+            return 'Error rendering view';
+        }
     }
-
 }
