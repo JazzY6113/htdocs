@@ -98,6 +98,7 @@ class LibrarianController
     {
         $publishers = Publisher::all();
         $authors = Author::all();
+        $genres = \Model\Genre::all();
 
         if ($request->method === 'POST') {
             try {
@@ -109,26 +110,30 @@ class LibrarianController
                     'price' => $request->price,
                     'total_copies' => $request->total_copies,
                     'available_copies' => $request->total_copies,
-                    'is_new_edition' => isset($request->is_new_edition) ? 1 : 0, // Исправлено здесь
+                    'is_new_edition' => isset($request->is_new_edition) ? 1 : 0,
                     'summary' => $request->summary ?? null
                 ];
 
-                // Валидация обязательных полей
                 if (empty($data['title']) || empty($data['author_id']) || empty($data['publisher_id'])) {
                     throw new \RuntimeException('Заполните все обязательные поля');
                 }
 
                 $book = Book::create($data);
 
-                if ($book) {
-                    app()->route->redirect('/library');
-                    return '';
+                // Привязываем жанры
+                if (!empty($request->genres)) {
+                    $book->genres()->attach($request->genres);
                 }
+
+                app()->route->redirect('/library');
+                return '';
+
             } catch (\Exception $e) {
                 return (new View('site.add-book', [
                     'error' => 'Ошибка при добавлении книги: ' . $e->getMessage(),
                     'publishers' => $publishers,
                     'authors' => $authors,
+                    'genres' => $genres,
                     'formData' => $request->all()
                 ]))->__toString();
             }
@@ -136,7 +141,8 @@ class LibrarianController
 
         return (new View('site.add-book', [
             'publishers' => $publishers,
-            'authors' => $authors
+            'authors' => $authors,
+            'genres' => $genres
         ]))->__toString();
     }
 
@@ -179,7 +185,12 @@ class LibrarianController
 
     public function returnBook(Request $request): string
     {
-        $activeLoans = BookLoan::active()->with(['book', 'reader'])->get();
+        if ($request->method === 'GET') {
+            $activeLoans = BookLoan::active()->with(['book', 'reader'])->get();
+            return (new View('site.return-book', [
+                'activeLoans' => $activeLoans
+            ]))->__toString();
+        }
 
         if ($request->method === 'POST') {
             try {
@@ -191,21 +202,51 @@ class LibrarianController
                         'status' => 'returned'
                     ]);
 
+                    // Добавляем проверку просрочки и создание штрафа
+                    if ($loan->isOverdue()) {
+                        \Model\Fine::create([ // Используем полное имя класса с namespace
+                            'reader_id' => $loan->reader_id,
+                            'loan_id' => $loan->loan_id,
+                            'amount' => $loan->calculateFine(),
+                            'reason' => 'Просрочка возврата на ' . $loan->getOverdueDays() . ' дней',
+                            'issue_date' => date('Y-m-d'),
+                            'status' => 'unpaid'
+                        ]);
+                    }
+
                     $loan->book->increment('available_copies');
-                    header('Location: /library');
-                    exit;
                 }
+
+                app()->route->redirect('/return-book');
+                return '';
+
             } catch (\Exception $e) {
+                error_log('Return book error: ' . $e->getMessage());
+                $activeLoans = BookLoan::active()->with(['book', 'reader'])->get();
                 return (new View('site.return-book', [
-                    'error' => 'Ошибка при возврате книги: ' . $e->getMessage(),
-                    'activeLoans' => $activeLoans
+                    'activeLoans' => $activeLoans,
+                    'error' => 'Ошибка при возврате книги'
                 ]))->__toString();
             }
         }
 
-        return (new View('site.return-book', [
-            'activeLoans' => $activeLoans
-        ]))->__toString();
+        app()->route->redirect('/library');
+        return '';
+    }
+
+    public function manageFines(Request $request)
+    {
+        $fines = Fine::with(['reader', 'loan.book'])->get();
+        return (new View('site.fines', ['fines' => $fines]))->__toString();
+    }
+
+    public function payFine(Request $request)
+    {
+        $fine = Fine::find($request->fine_id);
+        if ($fine) {
+            $fine->markAsPaid();
+        }
+        app()->route->redirect('/manage-fines');
     }
 
     public function readerBooks(Request $request): string

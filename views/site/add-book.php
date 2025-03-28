@@ -27,6 +27,19 @@
         </div>
 
         <div class="form-group">
+            <label>Жанры:
+                <select name="genres[]" multiple class="form-control">
+                    <?php foreach ($genres as $genre): ?>
+                        <option value="<?= $genre->genre_id ?>"
+                            <?= isset($formData['genres']) && in_array($genre->genre_id, $formData['genres']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($genre->name) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </div>
+
+        <div class="form-group">
             <label>Издательство:
                 <select name="publisher_id" required>
                     <option value="">Выберите издательство</option>

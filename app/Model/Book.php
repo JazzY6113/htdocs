@@ -69,4 +69,9 @@ class Book extends Model
     {
         return $this->available_copies > 0;
     }
+
+    public function genres()
+    {
+        return $this->belongsToMany(Genre::class, 'book_genres', 'book_id', 'genre_id');
+    }
 }
