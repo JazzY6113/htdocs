@@ -12,33 +12,11 @@ class BookLoan extends Model
     public $timestamps = false;
     protected $primaryKey = 'loan_id';
     protected $fillable = [
-        'book_id',
-        'reader_id',
-        'librarian_id',
-        'loan_date',
-        'due_date',
-        'return_date',
-        'status'
+        'book_id', 'reader_id', 'librarian_id',
+        'loan_date', 'due_date', 'return_date', 'status'
     ];
 
     protected $dates = ['loan_date', 'due_date', 'return_date'];
-
-    public function scopeActive($query)
-    {
-        return $query->where(function($q) {
-            $q->where('status', 'loaned')
-                ->orWhere('status', 'overdue');
-        })->whereNull('return_date');
-    }
-
-    public function scopeOverdue($query)
-    {
-        return $query->where('status', 'overdue')
-            ->orWhere(function($q) {
-                $q->whereNull('return_date')
-                    ->where('due_date', '<', date('Y-m-d'));
-            });
-    }
 
     public function book()
     {
@@ -55,29 +33,50 @@ class BookLoan extends Model
         return $this->belongsTo(User::class, 'librarian_id');
     }
 
-    public function scopeForReader($query, $readerId)
+    public function fines()
     {
-        return $query->where('reader_id', $readerId);
-    }
-
-    public function scopeForBook($query, $bookId)
-    {
-        return $query->where('book_id', $bookId);
+        return $this->hasMany(Fine::class, 'loan_id');
     }
 
     public function isOverdue(): bool
     {
-        return $this->return_date === null &&
-            $this->due_date < date('Y-m-d');
+        if ($this->return_date) {
+            return $this->return_date > $this->due_date;
+        }
+        return date('Y-m-d') > $this->due_date;
+    }
+
+    public function getOverdueDays(): int
+    {
+        if (!$this->isOverdue()) return 0;
+
+        $endDate = $this->return_date ?: date('Y-m-d');
+        return (new \DateTime($this->due_date))
+            ->diff(new \DateTime($endDate))
+            ->days;
     }
 
     public function calculateFine(): float
     {
-        if (!$this->isOverdue()) {
-            return 0;
-        }
+        $overdueDays = $this->getOverdueDays();
+        if ($overdueDays <= 0) return 0;
 
-        $daysOverdue = now()->diffInDays($this->due_date);
-        return min($daysOverdue * 10, 500); // Макс 500 руб. штрафа
+        $overdueMonths = ceil($overdueDays / 30);
+        $fine = $this->book->price * 0.005 * $overdueMonths;
+
+        return min($fine, $this->book->price);
+    }
+
+    public function scopeActive($query)
+    {
+        return $query->whereNull('return_date');
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->where(function($q) {
+            $q->whereNull('return_date')
+                ->where('due_date', '<', date('Y-m-d'));
+        });
     }
 }
