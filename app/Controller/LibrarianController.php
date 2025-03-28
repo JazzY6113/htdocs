@@ -18,7 +18,6 @@ class LibrarianController
         try {
             $activeLoans = BookLoan::active()->with(['book', 'reader'])->get();
 
-            // Создаем View и сразу возвращаем его как строку
             return (new View('site.library-dashboard', [
                 'activeLoans' => $activeLoans
             ]))->__toString();
@@ -35,7 +34,6 @@ class LibrarianController
     {
         if ($request->method === 'POST') {
             try {
-                // Генерируем номер только если поле полностью пустое
                 $cardNumber = trim($request->library_card_number);
                 if (empty($cardNumber)) {
                     $cardNumber = $this->generateLibraryCardNumber();
@@ -52,7 +50,6 @@ class LibrarianController
                     'status' => 'active'
                 ];
 
-                // Дополнительная валидация
                 if (empty($data['surname']) || empty($data['name']) ||
                     empty($data['address']) || empty($data['phone'])) {
                     throw new \RuntimeException('Заполните все обязательные поля');
@@ -112,13 +109,20 @@ class LibrarianController
                     'price' => $request->price,
                     'total_copies' => $request->total_copies,
                     'available_copies' => $request->total_copies,
-                    'is_new_edition' => $request->has('is_new_edition'),
+                    'is_new_edition' => isset($request->is_new_edition) ? 1 : 0, // Исправлено здесь
                     'summary' => $request->summary ?? null
                 ];
 
-                if (Book::create($data)) {
-                    header('Location: /library');
-                    exit;
+                // Валидация обязательных полей
+                if (empty($data['title']) || empty($data['author_id']) || empty($data['publisher_id'])) {
+                    throw new \RuntimeException('Заполните все обязательные поля');
+                }
+
+                $book = Book::create($data);
+
+                if ($book) {
+                    app()->route->redirect('/library');
+                    return '';
                 }
             } catch (\Exception $e) {
                 return (new View('site.add-book', [

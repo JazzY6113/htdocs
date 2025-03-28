@@ -64,7 +64,7 @@
         <div class="form-group">
             <label>
                 <input type="checkbox" name="is_new_edition" value="1"
-                    <?= ($formData['is_new_edition'] ?? false) ? 'checked' : '' ?>>
+                    <?= isset($formData['is_new_edition']) && $formData['is_new_edition'] ? 'checked' : '' ?>>
                 Новое издание
             </label>
         </div>
