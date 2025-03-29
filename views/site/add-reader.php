@@ -24,7 +24,7 @@
             <label>Номер читательского билета:
                 <input type="text" name="library_card_number"
                        value="<?= htmlspecialchars($formData['library_card_number'] ?? '') ?>"
-                       placeholder="Оставьте ПУСТЫМ для автоматической генерации">
+                       placeholder="Оставьте ПУСТЫМ для автоматической генерации" disabled>
                 <small class="hint">Система автоматически сгенерирует уникальный номер</small>
             </label>
         </div>
