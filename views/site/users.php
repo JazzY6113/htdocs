@@ -12,7 +12,7 @@
                 <input type="hidden" name="id" value="<?= $user->user_id ?>">
                 <select name="role" class="form-select">
                     <option value="librarian">Библиотекарь</option>
-                    <option value="user">Читатель</option>
+                    <option value="user">Пользователь</option>
                 </select>
                 <button type="submit" class="btn">Подтвердить</button>
             </form>

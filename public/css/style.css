@@ -99,6 +99,7 @@ h3 {
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 30px;
+    justify-content: space-between;
 }
 
 .admin-form, .form-group {

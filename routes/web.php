@@ -34,3 +34,7 @@ Route::add('GET', '/book-readers', [Controller\LibrarianController::class, 'book
     ->middleware('auth:librarian');
 Route::add('GET', '/popular-books', [Controller\LibrarianController::class, 'popularBooks'])
     ->middleware('auth:librarian');
+Route::add('GET', '/manage-fines', [Controller\LibrarianController::class, 'manageFines'])
+    ->middleware('auth:librarian');
+Route::add('POST', '/pay-fine', [Controller\LibrarianController::class, 'payFine'])
+    ->middleware('auth:librarian');
