@@ -53,7 +53,7 @@ class Middleware
         return $request;
     }
 
-//Запуск всех глобальных middlewares
+    //Запуск всех глобальных middlewares
     private function runAppMiddlewares(Request $request): Request
     {
         //Получаем список всех разрешенных классов middlewares из настроек приложения
