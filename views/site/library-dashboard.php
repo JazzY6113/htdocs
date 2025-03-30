@@ -7,6 +7,7 @@
         <a href="/loan-book" class="btn">Выдать книгу</a>
         <a href="/return-book" class="btn">Принять книгу</a>
         <a href="/popular-books" class="btn">Популярные книги</a>
+        <a href="/library-search" class="btn">Поиск книг</a>
     </div>
 
     <h2>Текущие выдачи</h2>

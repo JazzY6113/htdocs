@@ -107,4 +107,29 @@ class LibrarianController
             'books' => $popularBooks
         ]))->__toString();
     }
+
+    public function searchBooks(Request $request): string
+    {
+        if (!app()->auth::user()->isLibrarian()) {
+            app()->route->redirect('library-search');
+        }
+
+        $books = Book::query()->with(['author', 'publisher']);
+
+        if ($request->search) {
+            $searchTerm = $request->search;
+            $books->where(function($query) use ($searchTerm) {
+                $query->where('title', 'LIKE', "%{$searchTerm}%")
+                    ->orWhereHas('author', function($q) use ($searchTerm) {
+                        $q->where('name', 'LIKE', "%{$searchTerm}%")
+                            ->orWhere('surname', 'LIKE', "%{$searchTerm}%");
+                    });
+            });
+        }
+
+        return (new View('site.library-search', [
+            'books' => $books->get(),
+            'searchTerm' => $request->search ?? ''
+        ]))->__toString();
+    }
 }

@@ -1,4 +1,5 @@
 <div class="admin-container">
+    <a href="/library" class="btn back-btn">← Назад в библиотеку</a><br>
     <h1 class="admin-header">Добавление новой книги</h1>
 
     <?php if (isset($error)): ?>

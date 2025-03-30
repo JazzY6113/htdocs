@@ -56,4 +56,9 @@ class User extends Model implements IdentityInterface
     {
         return trim("{$this->surname} {$this->name} {$this->patronymic}");
     }
+
+    public function isLibrarian(): bool
+    {
+        return $this->role === 'librarian';
+    }
 }

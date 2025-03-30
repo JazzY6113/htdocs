@@ -48,3 +48,5 @@ Route::add('GET', '/fines', [Controller\FineController::class, 'index'])
     ->middleware('auth', 'librarian');
 Route::add('POST', '/pay-fine', [Controller\FineController::class, 'payFine'])
     ->middleware('auth', 'librarian');
+Route::add('GET', '/library-search', [Controller\LibrarianController::class, 'searchBooks'])
+    ->middleware('auth', 'librarian');

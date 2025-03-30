@@ -11,7 +11,7 @@ class LibrarianMiddleware
     {
         $user = Auth::user();
 
-        if (!$user || $user->role !== 'librarian') {
+        if (!$user || !$user->isLibrarian()) {
             app()->route->redirect('/hello');
             return;
         }
