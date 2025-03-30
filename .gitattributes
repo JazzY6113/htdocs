@@ -1,4 +1,0 @@
-*.php linguist-language=PHP
-*.hh linguist-detectable=false
-*.hack linguist-detectable=false
-*.htaccess linguist-detectable=false
