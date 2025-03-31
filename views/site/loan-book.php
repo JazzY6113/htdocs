@@ -9,6 +9,7 @@
     <form method="post" class="admin-form">
         <div class="form-group">
             <label>Выберите книгу:
+                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                 <select name="book_id" required>
                     <option value="">-- Выберите книгу --</option>
                     <?php foreach ($books as $book): ?>
@@ -23,6 +24,7 @@
 
         <div class="form-group">
             <label>Выберите читателя:
+                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                 <select name="reader_id" required>
                     <option value="">-- Выберите читателя --</option>
                     <?php foreach ($readers as $reader): ?>

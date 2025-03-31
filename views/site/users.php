@@ -9,6 +9,7 @@
                 <strong><?= $user->getFullName() ?></strong> (Логин: <?= $user->login ?>)
             </div>
             <form method="post" action="/approve-user" class="user-actions">
+                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                 <input type="hidden" name="id" value="<?= $user->user_id ?>">
                 <select name="role" class="form-select">
                     <option value="librarian">Библиотекарь</option>

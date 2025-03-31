@@ -35,6 +35,7 @@
                 </td>
                 <td>
                     <form method="post" action="/return-book">
+                        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
                         <input type="hidden" name="loan_id" value="<?= $loan->loan_id ?>">
                         <button type="submit" class="btn btn-sm">Принять возврат</button>
                     </form>

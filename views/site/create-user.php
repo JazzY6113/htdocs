@@ -4,31 +4,37 @@
     <form method="post" action="/create-user" class="admin-form">
         <div class="form-group">
             <label for="surname">Фамилия:</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input type="text" id="surname" name="surname" required>
         </div><br>
 
         <div class="form-group">
             <label for="name">Имя:</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input type="text" id="name" name="name" required>
         </div><br>
 
         <div class="form-group">
             <label for="patronymic">Отчество (необязательно):</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input type="text" id="patronymic" name="patronymic">
         </div><br>
 
         <div class="form-group">
             <label for="login">Логин:</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input type="text" id="login" name="login" required>
         </div><br>
 
         <div class="form-group">
             <label for="password">Пароль:</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <input type="password" id="password" name="password" required>
         </div><br>
 
         <div class="form-group">
             <label for="role">Роль:</label>
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <select id="role" name="role" required>
                 <option value="librarian">Библиотекарь</option>
                 <option value="user">Пользователь</option>
