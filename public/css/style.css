@@ -356,8 +356,7 @@ select[multiple] {
 .book-table {
     width: 100%;
     margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
+    text-align: center;
 }
 
 
@@ -365,4 +364,32 @@ select[multiple] {
     margin-top: 20px;
     color: #666;
     font-style: italic;
+}
+
+.avatar-container {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ddd;
+}
+
+.avatar-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #eee;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px dashed #ccc;
+}
+
+.avatar-form {
+    margin-top: 15px;
 }

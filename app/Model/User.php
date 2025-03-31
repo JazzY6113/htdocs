@@ -19,7 +19,8 @@ class User extends Model implements IdentityInterface
         'login',
         'password',
         'role',
-        'is_active'
+        'is_active',
+        'avatar'
     ];
 
     protected static function booted()
@@ -60,5 +61,15 @@ class User extends Model implements IdentityInterface
     public function isLibrarian(): bool
     {
         return $this->role === 'librarian';
+    }
+
+    public function getAvatarPath()
+    {
+        $avatarPath = "/public/avatars/{$this->avatar}";
+
+        if ($this->avatar && file_exists($_SERVER['DOCUMENT_ROOT'] . $avatarPath)) {
+            return $avatarPath;
+        }
+        return '/img/default-avatar.png';
     }
 }

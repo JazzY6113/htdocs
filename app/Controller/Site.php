@@ -66,4 +66,64 @@ class Site
         Auth::logout();
         app()->route->redirect('/hello');
     }
+
+    public function uploadAvatar(Request $request): string
+    {
+        if ($request->method === 'POST') {
+            try {
+                // Валидация файла
+                $validator = new Validator($request->all(), [
+                    'avatar' => ['required', 'image']
+                ], [
+                    'required' => 'Выберите файл для загрузки',
+                    'image' => 'Допустимы только JPG, PNG или GIF до 2MB'
+                ]);
+
+                if ($validator->fails()) {
+                    throw new \Exception(implode(', ', $validator->errors()['avatar'] ?? []));
+                }
+
+                $user = Auth::user();
+                $file = $request->file('avatar');
+
+                // Определяем путь загрузки
+                $uploadDir = $_SERVER['DOCUMENT_ROOT'] . '/public/avatars/';
+                $relativePath = 'avatars/'; // Для хранения в БД
+
+                // Удаляем старый аватар
+                if ($user->avatar && file_exists($uploadDir . $user->avatar)) {
+                    unlink($uploadDir . $user->avatar);
+                }
+
+                // Генерируем уникальное имя файла
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $filename = uniqid() . '.' . $ext;
+                $targetPath = $uploadDir . $filename;
+
+                // Проверяем существование папки и создаём, если её нет
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0775, true);
+                }
+
+                // Перемещаем файл
+                if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
+                    throw new \Exception("Не удалось сохранить файл");
+                }
+
+                // Сохраняем путь в БД (относительный путь)
+                $user->avatar = $filename;
+                $user->save();
+
+                app()->route->redirect('/hello');
+
+            } catch (\Exception $e) {
+                return new View('site.hello', [
+                    'message' => $e->getMessage(),
+                    'user' => Auth::user()
+                ]);
+            }
+        }
+
+        return new View('site.hello', ['user' => Auth::user()]);
+    }
 }
