@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a5a586ef17dd707f3d8aeb340e60607c",
+    "content-hash": "18ebe38e822ca09db351c302ce313c41",
     "packages": [
         {
             "name": "brick/math",
@@ -771,6 +771,79 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2025-03-24T11:47:24+00:00"
+        },
+        {
+            "name": "jazzy6113/collect",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JazzY6113/collect-library.git",
+                "reference": "ae2206db65a0540011e2fa428c55223a490bfa7d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JazzY6113/collect-library/zipball/ae2206db65a0540011e2fa428c55223a490bfa7d",
+                "reference": "ae2206db65a0540011e2fa428c55223a490bfa7d",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 | ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Collect\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Module for working with arrays",
+            "support": {
+                "issues": "https://github.com/JazzY6113/collect-library/issues",
+                "source": "https://github.com/JazzY6113/collect-library/tree/main"
+            },
+            "time": "2025-04-01T13:20:59+00:00"
+        },
+        {
+            "name": "jazzy6113/simple-flash",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JazzY6113/simple-flash.git",
+                "reference": "7bf8533c19019ea44c6e7ebc3f38f6972a78396e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JazzY6113/simple-flash/zipball/7bf8533c19019ea44c6e7ebc3f38f6972a78396e",
+                "reference": "7bf8533c19019ea44c6e7ebc3f38f6972a78396e",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.4 | ^8.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimpleFlash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "simple-flash",
+            "support": {
+                "issues": "https://github.com/JazzY6113/simple-flash/issues",
+                "source": "https://github.com/JazzY6113/simple-flash/tree/main"
+            },
+            "time": "2025-04-01T14:49:48+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -1583,6 +1656,8 @@
     "stability-flags": {
         "illuminate/database": 20,
         "illuminate/events": 20,
+        "jazzy6113/collect": 20,
+        "jazzy6113/simple-flash": 20,
         "nikic/fast-route": 20
     },
     "prefer-stable": false,
