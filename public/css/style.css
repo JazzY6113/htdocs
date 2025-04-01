@@ -45,7 +45,6 @@ header > nav > a {
 header > nav > a:hover {
     background-color: rgba(255, 255, 255, 0.2);
     text-decoration: none;
-    transform: translateY(-2px);
 }
 
 main {
@@ -152,7 +151,6 @@ select:focus, textarea:focus {
 
 textarea {
     min-height: 120px;
-    resize: vertical;
 }
 
 select[multiple] {
@@ -168,16 +166,13 @@ select[multiple] {
     text-decoration: none;
     border-radius: 8px;
     border: none;
-    cursor: pointer;
     font-size: 16px;
     font-weight: 500;
-    transition: all 0.3s ease;
     text-align: center;
 }
 
 .btn:hover {
     background-color: #3a5a8f;
-    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -248,11 +243,9 @@ select[multiple] {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     margin-bottom: 15px;
-    transition: all 0.3s ease;
 }
 
 .user-card:hover {
-    transform: translateY(-3px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -375,7 +368,6 @@ select[multiple] {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    object-fit: cover;
     border: 3px solid #ddd;
 }
 
