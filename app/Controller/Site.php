@@ -27,20 +27,12 @@ class Site
         if ($request->method === 'POST') {
 
             $validator = new Validator($request->all(), [
-                'name' => [
-                    'required'
-                ],
-                'login' => [
-                    'required',
-                    'unique:users,login'
-                ],
-                'password' => [
-                    'required'
-                ]
+                'name' => ['required'],
+                'login' => ['required', 'unique:users,login'],
+                'password' => ['required']
             ], [
-                'required' => 'Поле :field обязательно',
-                'unique' => 'Логин уже занят',
-                'regex' => 'Некорректный формат :field'
+                'required' => 'Поле :field пусто',
+                'unique' => 'Поле :field должно быть уникально'
             ]);
 
             if($validator->fails()){
@@ -50,6 +42,7 @@ class Site
 
             if (User::create($request->all())) {
                 app()->route->redirect('/login');
+                return false;
             }
         }
         return new View('site.signup');
