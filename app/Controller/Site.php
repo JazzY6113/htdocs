@@ -8,9 +8,6 @@ use Src\View;
 use Model\User;
 use Src\Auth\Auth;
 use Src\Validator\Validator;
-use Src\Validator\FormRules;
-use SimpleFlash\Flash;
-use SimpleFlash\FlashTypes;
 
 class Site
 {
@@ -31,17 +28,14 @@ class Site
 
             $validator = new Validator($request->all(), [
                 'name' => [
-                    'required',
-                    'regex:' . FormRules::NAME_REGEX
+                    'required'
                 ],
                 'login' => [
                     'required',
-                    'unique:users,login',
-                    'regex:' . FormRules::LOGIN_REGEX
+                    'unique:users,login'
                 ],
                 'password' => [
-                    'required',
-                    'regex:' . FormRules::PASSWORD_REGEX
+                    'required'
                 ]
             ], [
                 'required' => 'Поле :field обязательно',

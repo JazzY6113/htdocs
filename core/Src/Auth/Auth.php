@@ -3,14 +3,13 @@
 namespace Src\Auth;
 
 use Src\Session;
+use SimpleCSRF\CSRF;
 
 class Auth
 {
-    //Свойство для хранения любого класса, реализующего интерфейс IdentityInterface
-    private static IdentityInterface $user;
+    private static $user;
 
-    //Инициализация класса пользователя
-    public static function init(IdentityInterface $user): void
+    public static function init($user)
     {
         self::$user = $user;
         if (self::user()) {
@@ -18,23 +17,18 @@ class Auth
         }
     }
 
-    //Генерация нового токена для CSRF
-    public static function generateCSRF(): string
+    public static function generateCSRF()
     {
-        $token = md5(time());
-        Session::set('csrf_token', $token);
-        return $token;
+        return CSRF::generateToken();
     }
 
-    //Вход пользователя по модели
-    public static function login(IdentityInterface $user): void
+    public static function login($user)
     {
         self::$user = $user;
         Session::set('id', self::$user->getId());
     }
 
-    //Аутентификация пользователя и вход по учетным данным
-    public static function attempt(array $credentials): bool
+    public static function attempt(array $credentials)
     {
         if ($user = self::$user->attemptIdentity($credentials)) {
             self::login($user);
@@ -43,24 +37,18 @@ class Auth
         return false;
     }
 
-    //Возврат текущего аутентифицированного пользователя
     public static function user()
     {
-        $id = Session::get('id') ?? 0;
+        $id = Session::get('id') ?: 0;
         return self::$user->findIdentity($id);
     }
 
-    //Проверка является ли текущий пользователь аутентифицированным
-    public static function check(): bool
+    public static function check()
     {
-        if (self::user()) {
-            return true;
-        }
-        return false;
+        return (bool) self::user();
     }
 
-    //Выход текущего пользователя
-    public static function logout(): bool
+    public static function logout()
     {
         Session::clear('id');
         return true;

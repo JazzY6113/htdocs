@@ -10,7 +10,7 @@
         "illuminate/events": "^10.@dev",
         "nikic/fast-route": "^2.0@dev",
         "jazzy6113/collect": "dev-main",
-        "jazzy6113/simple-flash": "dev-main"
+        "jazzy6113/simple-csrf": "dev-main"
     },
     "autoload": {
         "psr-4": {

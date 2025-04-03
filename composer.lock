@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "18ebe38e822ca09db351c302ce313c41",
+    "content-hash": "645ae2d148376ba03d7303d5c5e6c07d",
     "packages": [
         {
             "name": "brick/math",
@@ -811,39 +811,39 @@
             "time": "2025-04-01T13:20:59+00:00"
         },
         {
-            "name": "jazzy6113/simple-flash",
+            "name": "jazzy6113/simple-csrf",
             "version": "dev-main",
             "source": {
                 "type": "git",
-                "url": "https://github.com/JazzY6113/simple-flash.git",
-                "reference": "7bf8533c19019ea44c6e7ebc3f38f6972a78396e"
+                "url": "https://github.com/JazzY6113/simple-csrf.git",
+                "reference": "c071d5982f9be0b7b4bc69eba519c2d81227c9cd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JazzY6113/simple-flash/zipball/7bf8533c19019ea44c6e7ebc3f38f6972a78396e",
-                "reference": "7bf8533c19019ea44c6e7ebc3f38f6972a78396e",
+                "url": "https://api.github.com/repos/JazzY6113/simple-csrf/zipball/c071d5982f9be0b7b4bc69eba519c2d81227c9cd",
+                "reference": "c071d5982f9be0b7b4bc69eba519c2d81227c9cd",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.4 | ^8.0"
+                "php": ">=5.6"
             },
             "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "SimpleFlash\\": "src/"
+                    "SimpleCSRF\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "description": "simple-flash",
+            "description": "csrf",
             "support": {
-                "issues": "https://github.com/JazzY6113/simple-flash/issues",
-                "source": "https://github.com/JazzY6113/simple-flash/tree/main"
+                "issues": "https://github.com/JazzY6113/simple-csrf/issues",
+                "source": "https://github.com/JazzY6113/simple-csrf/tree/main"
             },
-            "time": "2025-04-01T14:49:48+00:00"
+            "time": "2025-04-02T11:33:32+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -1657,7 +1657,7 @@
         "illuminate/database": 20,
         "illuminate/events": 20,
         "jazzy6113/collect": 20,
-        "jazzy6113/simple-flash": 20,
+        "jazzy6113/simple-csrf": 20,
         "nikic/fast-route": 20
     },
     "prefer-stable": false,
