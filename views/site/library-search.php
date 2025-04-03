@@ -4,7 +4,7 @@
     <a href="/library" class="btn back-btn">← Назад в библиотеку</a><br><br>
 
     <form method="get" action="/library-search" class="search-form">
-        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+        <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
         <input type="text" name="search"
                value="<?= htmlspecialchars($searchTerm) ?>"
                placeholder="Название или автор"><br><br>

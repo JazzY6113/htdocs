@@ -9,14 +9,14 @@
     <form method="post" class="admin-form">
         <div class="form-group">
             <label>Название:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="text" name="title" value="<?= htmlspecialchars($formData['title'] ?? '') ?>" required>
             </label>
         </div>
 
         <div class="form-group">
             <label>Автор:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <select name="author_id" required>
                     <option value="">Выберите автора</option>
                     <?php foreach ($authors as $author): ?>
@@ -31,7 +31,7 @@
 
         <div class="form-group">
             <label>Жанры:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <select name="genres[]" multiple class="form-control">
                     <?php foreach ($genres as $genre): ?>
                         <option value="<?= $genre->genre_id ?>"
@@ -45,7 +45,7 @@
 
         <div class="form-group">
             <label>Издательство:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <select name="publisher_id" required>
                     <option value="">Выберите издательство</option>
                     <?php foreach ($publishers as $publisher): ?>
@@ -60,7 +60,7 @@
 
         <div class="form-group">
             <label>Год издания:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="number" name="publication_year"
                        value="<?= htmlspecialchars($formData['publication_year'] ?? '') ?>" required>
             </label>
@@ -68,7 +68,7 @@
 
         <div class="form-group">
             <label>Цена:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="number" step="0.01" name="price"
                        value="<?= htmlspecialchars($formData['price'] ?? '') ?>" required>
             </label>
@@ -76,7 +76,7 @@
 
         <div class="form-group">
             <label>Количество экземпляров:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="number" name="total_copies"
                        value="<?= htmlspecialchars($formData['total_copies'] ?? 1) ?>" required min="1">
             </label>
@@ -84,7 +84,7 @@
 
         <div class="form-group">
             <label>
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="checkbox" name="is_new_edition" value="1"
                     <?= isset($formData['is_new_edition']) && $formData['is_new_edition'] ? 'checked' : '' ?>>
                 Новое издание
@@ -93,7 +93,7 @@
 
         <div class="form-group">
             <label>Аннотация:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <textarea name="summary"><?= htmlspecialchars($formData['summary'] ?? '') ?></textarea>
             </label>
         </div>

@@ -14,25 +14,25 @@
     <form method="post" class="admin-form">
         <div class="form-group">
             <label>Фамилия:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="text" name="surname" value="<?= htmlspecialchars($formData['surname'] ?? '') ?>" required>
             </label>
         </div>
         <div class="form-group">
             <label>Имя:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="text" name="name" value="<?= htmlspecialchars($formData['name'] ?? '') ?>" required>
             </label>
         </div>
         <div class="form-group">
             <label>Отчество:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="text" name="patronymic" value="<?= htmlspecialchars($formData['patronymic'] ?? '') ?>">
             </label>
         </div>
         <div class="form-group">
             <label>Номер читательского билета:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="text" name="library_card_number"
                        value="<?= htmlspecialchars($formData['library_card_number'] ?? '') ?>"
                        placeholder="Оставьте ПУСТЫМ для автоматической генерации" disabled>
@@ -41,13 +41,13 @@
         </div>
         <div class="form-group">
             <label>Адрес:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <textarea name="address" required><?= htmlspecialchars($formData['address'] ?? '') ?></textarea>
             </label>
         </div>
         <div class="form-group">
             <label>Телефон:
-                <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
+                <input name="csrf_token" type="hidden" value="<?= \SimpleCSRF\CSRF::generateToken() ?>"/>
                 <input type="tel" name="phone" value="<?= htmlspecialchars($formData['phone'] ?? '') ?>" required>
             </label>
         </div>
