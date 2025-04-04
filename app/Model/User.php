@@ -20,8 +20,12 @@ class User extends Model implements IdentityInterface
         'password',
         'role',
         'is_active',
-        'avatar'
+        'avatar',
+        'api_token',
+        'token_expires_at'
     ];
+
+    protected $dates = ['token_expires_at'];
 
     protected static function booted()
     {
@@ -30,14 +34,14 @@ class User extends Model implements IdentityInterface
         });
     }
 
-    public function getId(): int
-    {
-        return $this->user_id;
-    }
-
     public function findIdentity(int $id)
     {
         return self::where('user_id', $id)->first();
+    }
+
+    public function getId(): int
+    {
+        return $this->user_id;
     }
 
     public function attemptIdentity(array $credentials)
@@ -53,23 +57,13 @@ class User extends Model implements IdentityInterface
         return $this->role === 'admin';
     }
 
-    public function getFullName(): string
-    {
-        return trim("{$this->surname} {$this->name} {$this->patronymic}");
-    }
-
     public function isLibrarian(): bool
     {
         return $this->role === 'librarian';
     }
 
-    public function getAvatarPath()
+    public function getFullName(): string
     {
-        $avatarPath = "/public/avatars/{$this->avatar}";
-
-        if ($this->avatar && file_exists($_SERVER['DOCUMENT_ROOT'] . $avatarPath)) {
-            return $avatarPath;
-        }
-        return '/img/default-avatar.png';
+        return trim("{$this->surname} {$this->name} {$this->patronymic}");
     }
 }

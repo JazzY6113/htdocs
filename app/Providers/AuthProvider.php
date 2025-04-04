@@ -3,11 +3,9 @@
 namespace Providers;
 
 use Src\Provider\AbstractProvider;
-use Src\Route;
 
 class AuthProvider extends AbstractProvider
 {
-
     public function register(): void
     {
     }
@@ -17,7 +15,7 @@ class AuthProvider extends AbstractProvider
         $authClass = $this->app->settings->getAuthClassName();
         $identityClass = $this->app->settings->getIdentityClassName();
 
-        $authClass::init(new $identityClass);
+        $authClass::init($identityClass);
         $this->app->bind('auth', new $authClass);
     }
 }
